@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +14,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Route::resource('/blog', BlogController::class);
+Route::post('blogfilter', [BlogController::class, 'blogfilter']);
+Route::post('/adduser', [UserController::class, 'register']);
+Route::get('/register', function () {
+    return view('auth.register');
+});
+
+Route::post('/login', [UserController::class, 'login']);
+Route::get('logout', [UserController::class, 'logoutuser']);
